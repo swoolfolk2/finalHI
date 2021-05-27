@@ -5,10 +5,6 @@ public class ControllerManager : MonoBehaviour
     public GameManager gameManager;
     public KeyCode left = KeyCode.A;
     public KeyCode right = KeyCode.D;
-    public KeyCode up = KeyCode.W;
-    public KeyCode down = KeyCode.S;
-    private float ls;
-    private float previousLs;
     private PlayerMovement playerMovement;
     public void SetPlayerMovement(PlayerMovement playerMovement)
     {
@@ -55,11 +51,11 @@ public class ControllerManager : MonoBehaviour
         {
             playerMovement.MoveLeft();
         }
-        else if (Input.GetKeyDown(KeyCode.Joystick1Button5))
+        if (Input.GetKeyDown(KeyCode.Joystick1Button5))
         {
             playerMovement.MoveRight();
         }
-        else if (Input.GetKeyDown(KeyCode.Joystick1Button0))
+        if (Input.GetKeyDown(KeyCode.Joystick1Button0))
         {
             playerMovement.ActivateIsJumping();
         }

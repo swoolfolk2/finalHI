@@ -1283,7 +1283,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1848930620
 Transform:
@@ -1313,10 +1313,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameManager: {fileID: 731714676}
   controllerManager: {fileID: 726596197}
-  trainPrefab: {fileID: 7158177863988685393, guid: b0e0f4114f454c2429f3b34b8cb305af, type: 3}
   playerPrefab: {fileID: 2323280963614636480, guid: a3c45973eece2d148b57f9dad653cef4, type: 3}
   mainCamera: {fileID: 1269706805}
   sizeLimits: 1e00000064000000
+  trainsPrefabs:
+  - {fileID: 1940540476488900, guid: 89125e248c44a274a816c73c4a565a1c, type: 3}
+  - {fileID: 1425482085034662, guid: 669b17d1c82a13f4f864f72c3c1a6ab0, type: 3}
 --- !u!1 &2060073069
 GameObject:
   m_ObjectHideFlags: 0

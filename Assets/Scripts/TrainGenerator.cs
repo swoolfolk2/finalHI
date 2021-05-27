@@ -4,26 +4,37 @@ using UnityEngine;
 
 public class TrainGenerator : MonoBehaviour
 {
-    public static float[] creationPositions = { -6.5f, 0, 6.5f };
+    public static float[] creationPositions = { -1, 0, 1 };
     public GameManager gameManager;
     public ControllerManager controllerManager;
-    public GameObject trainPrefab;
     public GameObject playerPrefab;
     public GameObject mainCamera;
-    public int[] sizeLimits = { 30, 100 };
+    public GameObject[] trainsPrefabs;
     private GameObject lastTrainCreated;
     private float timer = 0;
     private float lastSize = 30;
     private Vector3 lastPosition = Vector3.zero;
+    private Vector3 trainPrefabLocalScale;
+    private GameObject trainPrefab;
+    public Vector3 GetTrainPrefabLocalScale()
+    {
+        return trainPrefabLocalScale;
+    }
     public void CreateInitialGeneration()
     {
+        PlayerMovement playerPrefabPlayerMovement = playerPrefab.GetComponent<PlayerMovement>();
+        playerPrefabPlayerMovement.trainGenerator = this;
         DestroyPrefabsInstances();
         timer = 0;
         lastSize = 30;
         lastPosition = transform.position;
         Vector3 initialPosition = Vector3.zero;
+        int index = 0;
         for (int i = 0; i < 10; i++)
         {
+            index = Random.Range(0, trainsPrefabs.Length);
+            trainPrefab = trainsPrefabs[index];
+            trainPrefabLocalScale = trainPrefab.GetComponent<BoxCollider>().size;
             if (i == 0)
             {
                 initialPosition = transform.position;
@@ -53,29 +64,29 @@ public class TrainGenerator : MonoBehaviour
     {
         GameObject newPlayer = Instantiate(playerPrefab);
         newPlayer.transform.SetParent(transform);
-        newPlayer.transform.Translate(new Vector3(0, 0, 10));
+        newPlayer.transform.Translate(new Vector3(0, 0, 4));
         controllerManager.SetPlayerMovement(newPlayer.GetComponent<PlayerMovement>());
+        PlayerMovement newPLayerPlayerMovement = newPlayer.GetComponent<PlayerMovement>();
     }
     private void CreateNewTrain(Vector3 position)
     {
         GameObject newTrain = Instantiate(trainPrefab);
-        Vector3 newTrainLocalScale = GetRandomScale();
-        newTrain.transform.localScale = newTrainLocalScale;
-        newTrain.transform.position = position + Vector3.forward * newTrainLocalScale.z / 2;
+        newTrain.transform.position = position + Vector3.forward * trainPrefabLocalScale.z / 2;
         newTrain.GetComponent<TrainMovement>().SetGameManager(gameManager);
+
         lastTrainCreated = newTrain;
         lastSize = newTrain.transform.localScale.z;
-        lastPosition = newTrain.transform.position + Vector3.forward * newTrainLocalScale.z / 2;
-    }
-    private Vector3 GetRandomScale()
-    {
-        int z = Random.Range(sizeLimits[0], sizeLimits[1]);
-        return new Vector3(6, 9, z);
+        lastPosition = newTrain.transform.position + Vector3.forward * trainPrefabLocalScale.z / 2;
     }
     private Vector3 GetRandomPosition()
     {
-        double x = Random.Range(0, 2);
-        return new Vector3(creationPositions[(int)x], lastPosition.y, lastPosition.z);
+        int index = Random.Range(0, 2);
+        float newX = lastPosition.x + trainPrefabLocalScale.x * creationPositions[index];
+        if (newX < trainPrefabLocalScale.x * -1 || newX > trainPrefabLocalScale.x * 1)
+        {
+            newX = 0;
+        }
+        return new Vector3(newX, lastPosition.y, lastPosition.z);
     }
     private void DestroyPrefabsInstances()
     {

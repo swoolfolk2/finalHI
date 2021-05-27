@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TrainMovement : MonoBehaviour
 {
-    static public float speed = 25;
+    static public float speed = 20f;
     private GameManager gameManager;
     public void SetGameManager(GameManager gameManager)
     {
