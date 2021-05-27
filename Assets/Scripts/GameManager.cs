@@ -6,10 +6,12 @@ public class GameManager : MonoBehaviour
 {
     public TrainGenerator trainGenerator;
     public GameObject endGameContainer;
+    public Generator generator;
     public Text scoreText; 
     public Text endGameScoreText;
     int score = 0;
     bool isPlaying = false;
+
     public void EndGame()
     {
         endGameContainer.SetActive(true);
@@ -18,7 +20,7 @@ public class GameManager : MonoBehaviour
     {
 
         endGameContainer.SetActive(false);
-        trainGenerator.CreateInitialGeneration();
+        generator.CreateFirstGeneration();
         score = 0;
         isPlaying = true;
         scoreText.enabled = true;
@@ -38,6 +40,7 @@ public class GameManager : MonoBehaviour
         StartNewGame();
 
     }
+
     private void Update()
     {
         if(isPlaying){

@@ -216,3 +216,4 @@ MonoBehaviour:
   jumpHeight: 5
   jumpSteps: 30
   fallSpeed: 5.64
+  trainGenerator: {fileID: 0}

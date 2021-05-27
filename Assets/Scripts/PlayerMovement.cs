@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public KeyCode left = KeyCode.A;
-    public KeyCode right = KeyCode.D;
     public float speed = 100f;
     public float jumpHeight = 5;
     public float jumpSteps = 60;
@@ -13,15 +11,17 @@ public class PlayerMovement : MonoBehaviour
     public TrainGenerator trainGenerator;
     private Vector3 directionToMove = Vector3.zero;
     private int position = 1;
-    private float spaceDifference = Mathf.Abs(TrainGenerator.creationPositions[0] - TrainGenerator.creationPositions[1]);
     private bool isJumping;
     private int currentJumpStep;
     private float currentHeight;
     private Rigidbody playerRigidbody;
     private float movementSize;
-
     public Animator animator;
-
+    
+    public void SetTrainGenerator(TrainGenerator trainGenerator)
+    {
+        this.trainGenerator = trainGenerator;
+    }
     public void MoveLeft()
     {
         if (position > 0)
@@ -52,16 +52,7 @@ public class PlayerMovement : MonoBehaviour
     {
         Move();
         Jump();
-        if (playerRigidbody.velocity.y < 0)
-        {
-            animator.SetBool("jump",false);
-
-            playerRigidbody.AddForce(new Vector3(0, playerRigidbody.velocity.y * fallSpeed * Time.deltaTime, 0), ForceMode.VelocityChange);
-        }
-        if (movementSize == 0)
-        {
-            movementSize = trainGenerator.GetTrainPrefabLocalScale().x;
-        }
+        Fall();
     }
     private void Move()
     {
@@ -73,7 +64,7 @@ public class PlayerMovement : MonoBehaviour
             }
             else
             {
-                setPosition();
+                SetPosition();
             }
         }
         else if (directionToMove == Vector3.right)
@@ -84,7 +75,7 @@ public class PlayerMovement : MonoBehaviour
             }
             else
             {
-                setPosition();
+                SetPosition();
             }
         }
     }
@@ -103,9 +94,20 @@ public class PlayerMovement : MonoBehaviour
              
         }
     }
-    private void setPosition()
+    private void SetPosition()
     {
         transform.position = new Vector3(TrainGenerator.creationPositions[position] * movementSize, transform.position.y, transform.position.z);
         directionToMove = Vector3.zero;
+    }
+    private void Fall()
+    {
+        if (playerRigidbody.velocity.y < 0)
+        {
+            playerRigidbody.AddForce(new Vector3(0, playerRigidbody.velocity.y * fallSpeed * Time.deltaTime, 0), ForceMode.VelocityChange);
+        }
+        if (movementSize == 0)
+        {
+            movementSize = trainGenerator.GetTrainPrefabLocalScale().x;
+        }
     }
 }
