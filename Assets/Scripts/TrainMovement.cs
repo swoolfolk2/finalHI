@@ -4,10 +4,18 @@ using UnityEngine;
 
 public class TrainMovement : MonoBehaviour
 {
-    public static float speed = 50;
+    static public float speed = 25;
+    private GameManager gameManager;
+    public void SetGameManager(GameManager gameManager)
+    {
+        this.gameManager = gameManager;
+    }
     private void Update()
     {
-        Vector3 direction = Vector3.back;
-        transform.position += direction * speed * Time.deltaTime;
+        if (!gameManager.IsEndGameContainerActive())
+        {
+            Vector3 direction = Vector3.back;
+            transform.position += direction * speed * Time.deltaTime;
+        }
     }
 }
