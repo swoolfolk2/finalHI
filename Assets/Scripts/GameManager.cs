@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour
 {
     public TrainGenerator trainGenerator;
     public GameObject endGameContainer;
+    public Generator generator;
     public void EndGame()
     {
         endGameContainer.SetActive(true);
@@ -13,7 +14,7 @@ public class GameManager : MonoBehaviour
     public void StartNewGame()
     {
         endGameContainer.SetActive(false);
-        trainGenerator.CreateInitialGeneration();
+        generator.CreateFirstGeneration();
     }
     public bool IsEndGameContainerActive()
     {
@@ -22,9 +23,5 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         StartNewGame();
-    }
-    private void Update()
-    {
-
     }
 }
