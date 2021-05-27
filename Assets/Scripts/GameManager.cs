@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
     public TrainGenerator trainGenerator;
     public GameObject endGameContainer;
     public Generator generator;
-    public Text scoreText; 
+    public Text scoreText;
     public Text endGameScoreText;
     int score = 0;
     bool isPlaying = false;
@@ -27,8 +27,9 @@ public class GameManager : MonoBehaviour
     }
     public bool IsEndGameContainerActive()
     {
-        
-        if(endGameContainer.activeSelf){
+
+        if (endGameContainer.activeSelf)
+        {
             isPlaying = false;
             scoreText.enabled = false;
             endGameScoreText.text = scoreText.text;
@@ -43,10 +44,11 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if(isPlaying){
-            score += (int) (1);
-            scoreText.text = "Score: "+score.ToString();
+        if (isPlaying)
+        {
+            score += (int)(1);
+            scoreText.text = "Score: " + score.ToString();
         }
-        
+
     }
 }
