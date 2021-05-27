@@ -4,15 +4,12 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-
     public KeyCode left = KeyCode.A;
     public KeyCode right = KeyCode.D;
-
     public float movingSpeed = 10f;
-
-    Vector3 directionToMove = Vector3.zero;
-    int position = 1;
-    float spaceDifference = Mathf.Abs(TrainGenerator.creationPositions[0] - TrainGenerator.creationPositions[1]);
+    private Vector3 directionToMove = Vector3.zero;
+    private int position = 1;
+    private float spaceDifference = Mathf.Abs(TrainGenerator.creationPositions[0] - TrainGenerator.creationPositions[1]);
 
     public void MoveLeft()
     {

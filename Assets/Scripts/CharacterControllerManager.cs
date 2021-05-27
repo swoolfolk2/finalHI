@@ -7,10 +7,6 @@ public class CharacterControllerManager : MonoBehaviour
     public KeyCode up = KeyCode.W;
     public KeyCode down = KeyCode.S;
     public PlayerMovement playerMovement;
-    private void Start()
-    {
-
-    }
     private void Update()
     {
         KeyboardInput();
