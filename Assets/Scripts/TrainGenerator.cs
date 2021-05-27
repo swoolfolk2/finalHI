@@ -80,7 +80,7 @@ public class TrainGenerator : MonoBehaviour
     }
     private Vector3 GetRandomPosition()
     {
-        int index = Random.Range(0, 2);
+        int index = Random.Range(0, 3);
         float newX = lastPosition.x + trainPrefabLocalScale.x * creationPositions[index];
         if (newX < trainPrefabLocalScale.x * -1 || newX > trainPrefabLocalScale.x * 1)
         {

@@ -19,6 +19,9 @@ public class PlayerMovement : MonoBehaviour
     private float currentHeight;
     private Rigidbody playerRigidbody;
     private float movementSize;
+
+    public Animator animator;
+
     public void MoveLeft()
     {
         if (position > 0)
@@ -43,6 +46,7 @@ public class PlayerMovement : MonoBehaviour
     {
         currentHeight = transform.position.y;
         playerRigidbody = GetComponent<Rigidbody>();
+        animator = GetComponent<Animator>();
     }
     private void Update()
     {
@@ -50,6 +54,8 @@ public class PlayerMovement : MonoBehaviour
         Jump();
         if (playerRigidbody.velocity.y < 0)
         {
+            animator.SetBool("jump",false);
+
             playerRigidbody.AddForce(new Vector3(0, playerRigidbody.velocity.y * fallSpeed * Time.deltaTime, 0), ForceMode.VelocityChange);
         }
         if (movementSize == 0)
@@ -88,11 +94,13 @@ public class PlayerMovement : MonoBehaviour
         {
             transform.Translate(0, jumpHeight / jumpSteps, 0);
             currentJumpStep++;
+            animator.SetBool("jump",true);
         }
         if (currentJumpStep == jumpSteps && playerRigidbody.velocity.y >= 0)
         {
             currentJumpStep = 0;
             isJumping = false;
+             
         }
     }
     private void setPosition()
