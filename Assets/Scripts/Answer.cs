@@ -3,47 +3,55 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.Windows.Speech;
 
-
+/** 
+    Class to Get the voice input from the user and store the value.
+ */
 public class Answer : MonoBehaviour
 {
-    public GameObject recordMessage;
-    private TextMeshProUGUI _Result;
-    private string _mainCall;
-    private bool _giveOrder;
-    private bool _continue;
-    private bool _done;
-    private DictationRecognizer dictationRecognizer;
-    public GameObject continueButton;
-    public Transform containerTransform;
-    private GameObject newObj;
-    private string message = "";
+    public GameObject recordMessage; // button to continue to next step
+    private TextMeshProUGUI result; // displayed message of the voice input
+    private bool giveOrder; // if the command can be detected
+    private bool done; // if is finished
+    private DictationRecognizer dictationRecognizer; // object to detect voice input
+    public GameObject continueButton; // button to continue to next step
+    private int startingCounter = 0; // number of fields in global control
     void Start()
     {
-        _Result = GetComponent<TextMeshProUGUI>();
+        startingCounter = GlobalControl.fields.Count;
+        result = GetComponent<TextMeshProUGUI>();
         dictationRecognizer = new DictationRecognizer();
         dictationRecognizer.DictationHypothesis += DetectCommand;
         dictationRecognizer.Start();
     }
+
+    /**
+        Voice detenction function. Detects the text and stores it in [_results]
+        @params text value of the voice input
+    */
     private void DetectCommand(string text)
     {
-        if (!_giveOrder) return;
-        _Result.text = text;
-        _done = true;
-        showNext();
+        if (!giveOrder) return;
+        result.text = text;
+        done = true;
+        ShowNext();
     }
     private void Update()
     {
-        _giveOrder = Input.GetKey(KeyCode.Joystick1Button1);
-        if (!Input.GetKey(KeyCode.B) || !_done) return;
-        newObj.GetComponent<Button>().onClick.Invoke();
-        var curr = GlobalControl.Instance.counter;
-        GlobalControl.Instance.fields[curr] = _Result.text;
-        GlobalControl.Instance.counter += 1;
+        giveOrder = Input.GetKey(KeyCode.Joystick1Button1);
     }
-    public void showNext()
+    
+    /**
+        Displays [continueButton] for the user to be able to continue
+    */
+    public void ShowNext()
     {
+        dictationRecognizer.Stop();
         continueButton.SetActive(true);
         recordMessage.SetActive(false);
-        dictationRecognizer.Stop();
+        GlobalControl.fields.Add(result.text);
+        if (GlobalControl.fields.Count > startingCounter + 1)
+        {
+            GlobalControl.fields.RemoveAt(GlobalControl.fields.Count - startingCounter - 1);
+        }
     }
 }

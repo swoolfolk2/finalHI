@@ -3,10 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+/**
+    Basic Class to change between scenes.
+*/
 public class ChangeScene : MonoBehaviour
 {
-    public string sceneName;
-    public GameObject button;
+    public string sceneName; // Scene name to be changed to
+    public GameObject button; // button to change scenes
+    /**
+        Changes to the next scene give by [sceneName]
+    */
     public void ChangeScreen()
     {
         SceneManager.LoadScene(sceneName);

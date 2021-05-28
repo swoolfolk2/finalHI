@@ -1,15 +1,14 @@
 using UnityEngine;
-
+/**
+    Class to detect Joystick inputs from a Controller
+*/
 public class ControllerManager : MonoBehaviour
 {
-    public GameManager gameManager = null;
-    public KeyCode left = KeyCode.A;
-    public KeyCode right = KeyCode.D;
-    public PlayerMovement playerMovement;
-    public void SetPlayerMovement(PlayerMovement playerMovement)
-    {
-        this.playerMovement = playerMovement;
-    }
+    public GameManager gameManager = null; // GameManager to detect status of game
+    public KeyCode left = KeyCode.A; // Key for left movement
+    public KeyCode right = KeyCode.D; // Key for right movement
+    public PlayerMovement playerMovement; // Script to move player
+
     private void Update()
     {
         if (!gameManager)
@@ -20,7 +19,6 @@ public class ControllerManager : MonoBehaviour
         {
             if (!gameManager.IsEndGameContainerActive() && !gameManager.IsPauseContainerActive())
             {
-
                 KeyboardInput();
                 JoystickInput();
             }
@@ -46,6 +44,9 @@ public class ControllerManager : MonoBehaviour
         }
 
     }
+    /**
+        Function to detect Keyboard Input and move Player
+    */
     private void KeyboardInput()
     {
         Vector3 direction = Vector3.zero;
@@ -64,6 +65,9 @@ public class ControllerManager : MonoBehaviour
         }
         playerMovement.Move(direction);
     }
+    /**
+        Function to detect Joystick Input and move Player
+    */
     private void JoystickInput()
     {
         Vector3 direction = Vector3.zero;

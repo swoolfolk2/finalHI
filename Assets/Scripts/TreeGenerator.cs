@@ -2,9 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/**
+    Class to generate Trees
+*/
 public class TreeGenerator : MonoBehaviour
 {
-    public GameObject treePrefab;
+    public GameObject treePrefab; // tree prefab
     void Start()
     {
         Vector3 position = Vector3.zero;
