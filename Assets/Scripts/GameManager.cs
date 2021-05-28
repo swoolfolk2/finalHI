@@ -9,21 +9,31 @@ public class GameManager : MonoBehaviour
     public Generator generator;
     public Text scoreText;
     public Text endGameScoreText;
-    int score = 0;
-    bool isPlaying = false;
+    public GameObject gameContainer;
+    public GameObject lifesContainer;
+    private int score = 0;
+    private bool isPlaying = false;
+    private int lifes;
+    public List<GameObject> lifesObjects;
 
     public void EndGame()
     {
         endGameContainer.SetActive(true);
+        gameContainer.SetActive(false);
     }
     public void StartNewGame()
     {
-
-        endGameContainer.SetActive(false);
         generator.CreateFirstGeneration();
         score = 0;
         isPlaying = true;
         scoreText.enabled = true;
+        lifes = 3;
+        foreach (GameObject lifeObject in lifesObjects)
+        {
+            lifeObject.SetActive(true);
+        }
+        endGameContainer.SetActive(false);
+        gameContainer.SetActive(true);
     }
     public bool IsEndGameContainerActive()
     {
@@ -36,12 +46,20 @@ public class GameManager : MonoBehaviour
         }
         return endGameContainer.activeSelf;
     }
+    public void removeOneLife()
+    {
+        lifes--;
+        GameObject objectFound = lifesObjects.Find(lifeObject => lifeObject.activeSelf == true);
+        objectFound.SetActive(false);
+        if (lifes == 0)
+        {
+            EndGame();
+        }
+    }
     private void Start()
     {
         StartNewGame();
-
     }
-
     private void Update()
     {
         if (isPlaying)

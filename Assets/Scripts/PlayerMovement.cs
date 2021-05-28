@@ -17,7 +17,6 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody playerRigidbody;
     private float movementSize;
     public Animator animator;
-    
     public void SetTrainGenerator(TrainGenerator trainGenerator)
     {
         this.trainGenerator = trainGenerator;
@@ -85,13 +84,12 @@ public class PlayerMovement : MonoBehaviour
         {
             transform.Translate(0, jumpHeight / jumpSteps, 0);
             currentJumpStep++;
-            animator.SetBool("jump",true);
+            animator.SetBool("jump", true);
         }
         if (currentJumpStep == jumpSteps && playerRigidbody.velocity.y >= 0)
         {
             currentJumpStep = 0;
             isJumping = false;
-             
         }
     }
     private void SetPosition()

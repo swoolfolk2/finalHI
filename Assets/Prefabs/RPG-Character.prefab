@@ -1582,14 +1582,14 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1859816385569837890}
   serializedVersion: 2
-  m_Mass: 80
+  m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 1
-  m_Constraints: 80
-  m_CollisionDetection: 0
+  m_Constraints: 112
+  m_CollisionDetection: 2
 --- !u!136 &1859816385572902602
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1616,8 +1616,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acec1e96d4484304ab7af4ca76f9abde, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  left: 97
-  right: 100
   speed: 100
   jumpHeight: 5
   jumpSteps: 30
