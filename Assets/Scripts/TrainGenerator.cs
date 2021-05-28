@@ -8,7 +8,6 @@ public class TrainGenerator : MonoBehaviour
     public static float[] creationPositions = { -1, 0, 1 };
     public GameManager gameManager;
     public GameObject[] trainsPrefabs;
-    public ObstacleGenerator obstacleGenerator;
     private GameObject lastTrainCreated;
     private float lastSize;
     private Vector3 lastPosition = Vector3.zero;

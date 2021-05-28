@@ -17,9 +17,7 @@ public class PlayerMovement : MonoBehaviour
     private float currentHeight;
     private float movementSize;
     public Animator animator;
-    
     private Vector3 moveDirection = Vector3.zero;
-
     public float height;
     
     public void SetTrainGenerator(TrainGenerator trainGenerator)
