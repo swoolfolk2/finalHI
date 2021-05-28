@@ -771,6 +771,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   obstaclePrefab: {fileID: 758973071733489392, guid: 6c4481a53c8d09c4eb3ac86f3b40dac7, type: 3}
+  height: 2.4
 --- !u!1 &1200616681
 GameObject:
   m_ObjectHideFlags: 0
@@ -814,7 +815,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3a951b9fbdae144a9227c4ee13a56dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerPrefab: {fileID: 2323280963614636480, guid: a3c45973eece2d148b57f9dad653cef4, type: 3}
+  playerPrefab: {fileID: 1859816385569837890, guid: c33d715e104bc4a438d1c5a7ee137fb6, type: 3}
   controllerManager: {fileID: 726596197}
 --- !u!1 &1269706805
 GameObject:
@@ -1643,12 +1644,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameManager: {fileID: 731714676}
-  controllerManager: {fileID: 726596197}
-  playerPrefab: {fileID: 1859816385569837890, guid: c33d715e104bc4a438d1c5a7ee137fb6, type: 3}
-  mainCamera: {fileID: 1269706805}
   trainsPrefabs:
   - {fileID: 1940540476488900, guid: 89125e248c44a274a816c73c4a565a1c, type: 3}
   - {fileID: 1425482085034662, guid: 669b17d1c82a13f4f864f72c3c1a6ab0, type: 3}
+  obstacleGenerator: {fileID: 0}
 --- !u!1 &2060073069
 GameObject:
   m_ObjectHideFlags: 0

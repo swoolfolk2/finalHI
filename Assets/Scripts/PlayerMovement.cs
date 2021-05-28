@@ -12,11 +12,15 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 directionToMove = Vector3.zero;
     private int position = 1;
     private bool isJumping;
+    private CharacterController characterController;
     private int currentJumpStep;
     private float currentHeight;
-    private Rigidbody playerRigidbody;
     private float movementSize;
     public Animator animator;
+    
+    private Vector3 moveDirection = Vector3.zero;
+
+    public float height;
     
     public void SetTrainGenerator(TrainGenerator trainGenerator)
     {
@@ -40,74 +44,58 @@ public class PlayerMovement : MonoBehaviour
     }
     public void ActivateIsJumping()
     {
+        height = transform.position.y + 1;
         isJumping = true;
+        animator.SetBool("jump",true);
     }
     private void Start()
     {
         currentHeight = transform.position.y;
-        playerRigidbody = GetComponent<Rigidbody>();
+        characterController = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
     }
     private void Update()
     {
-        Move();
-        Jump();
-        Fall();
+        if(isJumping){
+            Jump();
+        }else{
+            Fall();
+        }
     }
-    private void Move()
+    public void Move(Vector3 direction)
     {
-        if (directionToMove == Vector3.left)
-        {
-            if (transform.position.x > TrainGenerator.creationPositions[position] * movementSize)
-            {
-                transform.position += directionToMove * speed * Time.deltaTime;
-            }
-            else
-            {
-                SetPosition();
-            }
-        }
-        else if (directionToMove == Vector3.right)
-        {
-            if (transform.position.x < TrainGenerator.creationPositions[position] * movementSize)
-            {
-                transform.position += directionToMove * speed * Time.deltaTime;
-            }
-            else
-            {
-                SetPosition();
-            }
-        }
+        
+        directionToMove = direction;
+        characterController.Move(direction * 3f);
+
     }
     private void Jump()
     {
-        if (isJumping && currentJumpStep < jumpSteps)
-        {
-            transform.Translate(0, jumpHeight / jumpSteps, 0);
-            currentJumpStep++;
-            animator.SetBool("jump",true);
+        if(transform.position.y < height){
+            characterController.Move(Vector3.up * 2 * Time.deltaTime);
         }
-        if (currentJumpStep == jumpSteps && playerRigidbody.velocity.y >= 0)
-        {
-            currentJumpStep = 0;
+        else{
             isJumping = false;
-             
+            animator.SetBool("jump",false);
         }
+        
+        
+        
+        
+        
     }
     private void SetPosition()
     {
+        
         transform.position = new Vector3(TrainGenerator.creationPositions[position] * movementSize, transform.position.y, transform.position.z);
         directionToMove = Vector3.zero;
     }
     private void Fall()
     {
-        if (playerRigidbody.velocity.y < 0)
+        if (!characterController.isGrounded && !isJumping)
         {
-            playerRigidbody.AddForce(new Vector3(0, playerRigidbody.velocity.y * fallSpeed * Time.deltaTime, 0), ForceMode.VelocityChange);
+            characterController.Move(Vector3.down * fallSpeed * Time.deltaTime);
         }
-        if (movementSize == 0)
-        {
-            movementSize = trainGenerator.GetTrainPrefabLocalScale().x;
-        }
+       
     }
 }
