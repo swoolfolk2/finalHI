@@ -3,47 +3,54 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.Windows.Speech;
 
-
+/** 
+    Class to Get the voice input from the user and store the value.
+ */
 public class Answer : MonoBehaviour
 {
-    public GameObject recordMessage;
-    private TextMeshProUGUI _Result;
-    private string _mainCall;
-    private bool _giveOrder;
-    private bool _continue;
-    private bool _done;
-    private DictationRecognizer dictationRecognizer;
-    public GameObject continueButton;
-    public Transform containerTransform;
-    private GameObject newObj;
-    private string message = "";
+    public GameObject recordMessage; // displayed message for user instructions
+    public GameObject continueButton; // button to continue to next step
+    private TextMeshProUGUI _result; // displayed message of the voice input
+    private bool _giveOrder; // if the command can be detected
+    private bool _done; // if is finished
+    private DictationRecognizer _dictationRecognizer; // object to detect voice input
+    private GameObject _newObj; 
+    
     void Start()
     {
-        _Result = GetComponent<TextMeshProUGUI>();
-        dictationRecognizer = new DictationRecognizer();
-        dictationRecognizer.DictationHypothesis += DetectCommand;
-        dictationRecognizer.Start();
+        _result = GetComponent<TextMeshProUGUI>();
+        _dictationRecognizer = new DictationRecognizer();
+        _dictationRecognizer.DictationHypothesis += DetectCommand;
+        _dictationRecognizer.Start();
     }
+
+    /**
+        Voice detenction function. Detects the text and stores it in [_results]
+        @params text value of the voice input
+    */
     private void DetectCommand(string text)
     {
         if (!_giveOrder) return;
-        _Result.text = text;
+        _result.text = text;
         _done = true;
-        showNext();
+        ShowNext();
     }
     private void Update()
     {
         _giveOrder = Input.GetKey(KeyCode.Joystick1Button1);
         if (!Input.GetKey(KeyCode.B) || !_done) return;
-        newObj.GetComponent<Button>().onClick.Invoke();
-        var curr = GlobalControl.Instance.counter;
-        GlobalControl.Instance.fields[curr] = _Result.text;
-        GlobalControl.Instance.counter += 1;
+        _newObj.GetComponent<Button>().onClick.Invoke();
+        var curr = GlobalControl.instance.counter;
+        GlobalControl.instance.fields[curr] = _result.text;
+        GlobalControl.instance.counter += 1;
     }
-    public void showNext()
+    /**
+        Displays [continueButton] for the user to be able to continue
+    */
+    public void ShowNext()
     {
         continueButton.SetActive(true);
         recordMessage.SetActive(false);
-        dictationRecognizer.Stop();
+        _dictationRecognizer.Stop();
     }
 }

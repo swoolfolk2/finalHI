@@ -2,70 +2,89 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+
+/**
+    Class to manage the status of the game
+*/
 public class GameManager : MonoBehaviour
 {
-    public TrainGenerator trainGenerator;
-    public GameObject endGameContainer;
-    public Generator generator;
-    public Text scoreText;
-    public Text endGameScoreText;
-    public GameObject gameContainer;
-    public List<GameObject> lifesObjects;
-    public GameObject pauseContainer;
-    private int score = 0;
-    private bool isPlaying = false;
-    private int lifeCounter = 3;
+    public GameObject endGameContainer; // Displayed Game Over Screen
+    public Generator generator; 
+    public Text scoreText; // Text to display current player Score
+    public Text endGameScoreText; // Text to display player Score on Game Over Screen
+    public GameObject gameContainer; // UI for when Player is playing
+    public List<GameObject> lifesObjects; // UI for Health of the Player 
+    public GameObject pauseContainer; // UI for Pause 
+    private int _score = 0; // int value of the Player's score
+    private bool _isPlaying = false; // boolean for knowing if Player is currently playing
+    private int _lifeCounter = 3; // int value of Player's Health
 
+    /**
+        Display the Game Over Screen
+    */
     public void EndGame()
     {
         endGameContainer.SetActive(true);
         gameContainer.SetActive(false);
     }
+    
+    /**
+        Restarts the Game
+    */
     public void StartNewGame()
     {
         gameContainer.SetActive(true);
         endGameContainer.SetActive(false);
         generator.CreateFirstGeneration();
-        score = 0;
-        isPlaying = true;
+        _score = 0;
+        _isPlaying = true;
         scoreText.enabled = true;
-        lifeCounter = 3;
+        _lifeCounter = 3;
         lifesObjects.ForEach(lifeObject => lifeObject.SetActive(true));
     }
+    /**
+        Detects if the user is still playing or if it's Game Over
+        @return bool if it's Game Over
+    */
     public bool IsEndGameContainerActive()
     {
         if (endGameContainer.activeSelf)
         {
-            isPlaying = false;
+            _isPlaying = false;
             scoreText.enabled = false;
             endGameScoreText.text = scoreText.text;
         }
         return endGameContainer.activeSelf;
     }
+
+    /**
+        Reduce Player's Health by 1
+    */
     public void DecreaseLife()
     {
-        lifeCounter--;
+        _lifeCounter--;
         GameObject objectFound = lifesObjects.Find(lifeObject => lifeObject.activeSelf);
         objectFound.SetActive(false);
-        if (lifeCounter == 0)
+        if (_lifeCounter == 0)
         {
             EndGame();
         }
     }
+    /**
+        Detects if the user is paused
+        @return bool if game is paused
+    */
     public bool IsPauseContainerActive()
     {
+        if(pauseContainer.activeSelf){
+            _isPlaying = false;
+        }
+        else{
+            _isPlaying = true;
+        }
         return pauseContainer.activeSelf;
     }
-    public void ContinueGame()
-    {
-        gameContainer.SetActive(true);
-        pauseContainer.SetActive(false);
-    }
-    public void PauseGame()
-    {
-        gameContainer.SetActive(false);
-        pauseContainer.SetActive(true);
-    }
+    
     private void Start()
     {
         StartNewGame();
@@ -74,10 +93,10 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (isPlaying)
+        if (_isPlaying)
         {
-            score += (int)(1);
-            scoreText.text = "Score: " + score.ToString();
+            _score += (int)(1);
+            scoreText.text = "Score: " + _score.ToString();
         }
     }
 }
