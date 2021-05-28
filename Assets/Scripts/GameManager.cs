@@ -2,19 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 /**
     Class to manage the status of the game
 */
 public class GameManager : MonoBehaviour
 {
+    public TrainGenerator trainGenerator;
     public GameObject endGameContainer; // Displayed Game Over Screen
-    public Generator generator; 
+    public Generator generator;
     public Text scoreText; // Text to display current player Score
     public Text endGameScoreText; // Text to display player Score on Game Over Screen
     public GameObject gameContainer; // UI for when Player is playing
     public List<GameObject> lifesObjects; // UI for Health of the Player 
     public GameObject pauseContainer; // UI for Pause 
+    public TextMeshProUGUI cardName;
+    public TextMeshProUGUI cardFrom;
     private int _score = 0; // int value of the Player's score
     private bool _isPlaying = false; // boolean for knowing if Player is currently playing
     private int _lifeCounter = 3; // int value of Player's Health
@@ -87,6 +91,11 @@ public class GameManager : MonoBehaviour
     
     private void Start()
     {
+        if (GlobalControl.fields.Count == 2)
+        {
+            cardName.text = GlobalControl.fields[0];
+            cardFrom.text = "From: " + GlobalControl.fields[1];
+        }
         StartNewGame();
         pauseContainer.SetActive(false);
     }

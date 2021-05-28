@@ -1,25 +1,11 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 
 /**
     Class to manage all fields and answers by Player
 */
-public class GlobalControl : MonoBehaviour 
+public static class GlobalControl
 {
-    public static GlobalControl instance; // This instance
-    public string[] fields = new string[3]; // Fields to fill by user
-    public int counter= 0; // current counter of fields
-
-    void Awake ()
-    {
-        
-        if (instance == null)
-        {
-            DontDestroyOnLoad(gameObject);
-            instance = this;
-        }
-        else if (instance != this)
-        {
-            Destroy (gameObject);
-        }
-    }
+    public static List<string> fields = new List<string>();
+    public static int counter = 0;
 }
