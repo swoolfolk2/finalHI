@@ -9,21 +9,27 @@ public class GameManager : MonoBehaviour
     public Generator generator;
     public Text scoreText;
     public Text endGameScoreText;
-    int score = 0;
-    bool isPlaying = false;
+    public GameObject gameContainer;
+    public List<GameObject> lifesObjects;
+    private int score = 0;
+    private bool isPlaying = false;
+    private int lifeCounter = 3;
 
     public void EndGame()
     {
         endGameContainer.SetActive(true);
+        gameContainer.SetActive(false);
     }
     public void StartNewGame()
     {
-
+        gameContainer.SetActive(true);
         endGameContainer.SetActive(false);
         generator.CreateFirstGeneration();
         score = 0;
         isPlaying = true;
         scoreText.enabled = true;
+        lifeCounter = 3;
+        lifesObjects.ForEach(lifeObject => lifeObject.SetActive(true));
     }
     public bool IsEndGameContainerActive()
     {
@@ -36,10 +42,19 @@ public class GameManager : MonoBehaviour
         }
         return endGameContainer.activeSelf;
     }
+    public void DecreaseLife()
+    {
+        lifeCounter--;
+        GameObject objectFound = lifesObjects.Find(lifeObject => lifeObject.activeSelf);
+        objectFound.SetActive(false);
+        if (lifeCounter == 0)
+        {
+            EndGame();
+        }
+    }
     private void Start()
     {
         StartNewGame();
-
     }
 
     private void Update()
@@ -49,6 +64,5 @@ public class GameManager : MonoBehaviour
             score += (int)(1);
             scoreText.text = "Score: " + score.ToString();
         }
-
     }
 }

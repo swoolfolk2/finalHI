@@ -44,13 +44,14 @@ public class TrainGenerator : MonoBehaviour
             if (i == 0)
             {
                 initialPosition = position;
-                CreateNewTrain(initialPosition);
+                CreateNewTrain(initialPosition, new Vector3(position.x + trainPrefabLocalScale.x, position.y, position.z));
             }
             else
             {
-                CreateNewTrain(GetRandomPosition());
+                Vector3[] positions = GetRandomPosition();
+                CreateNewTrain(positions[0], positions[1]);
                 generateObstacle = Convert.ToBoolean(UnityEngine.Random.Range(0, 2));
-                if (i % 3 == 0 && generateObstacle)
+                if (i % 3 == 0 && generateObstacle && positions[0].x != positions[1].x)
                 {
                     obstacleGenerator.CreateNextGeneration(lastTrainCreated.transform);
                 }
@@ -61,18 +62,22 @@ public class TrainGenerator : MonoBehaviour
     {
         trainPrefab = trainsPrefabs[UnityEngine.Random.Range(0, trainsPrefabs.Length)];
         trainPrefabLocalScale = trainPrefab.GetComponent<BoxCollider>().size;
-        CreateNewTrain(GetRandomPosition());
+        Vector3[] positions = GetRandomPosition();
+        CreateNewTrain(positions[0], positions[1]);
     }
-    private void CreateNewTrain(Vector3 position)
+    private void CreateNewTrain(Vector3 positionT1, Vector3 positionT2)
     {
         GameObject newTrain = Instantiate(trainPrefab);
-        newTrain.transform.position = position + Vector3.forward * trainPrefabLocalScale.z / 2;
+        newTrain.transform.position = positionT1 + Vector3.forward * trainPrefabLocalScale.z / 2;
         newTrain.GetComponent<TrainMovement>().SetGameManager(gameManager);
         lastTrainCreated = newTrain;
         lastSize = newTrain.transform.localScale.z;
         lastPosition = newTrain.transform.position + Vector3.forward * trainPrefabLocalScale.z / 2;
+        GameObject newTrain2 = Instantiate(trainPrefab);
+        newTrain2.transform.position = positionT2 + Vector3.forward * trainPrefabLocalScale.z / 2;
+        newTrain2.GetComponent<TrainMovement>().SetGameManager(gameManager);
     }
-    private Vector3 GetRandomPosition()
+    private Vector3[] GetRandomPosition()
     {
         int index = UnityEngine.Random.Range(0, 3);
         float newX = lastPosition.x + trainPrefabLocalScale.x * creationPositions[index];
@@ -80,6 +85,11 @@ public class TrainGenerator : MonoBehaviour
         {
             newX = 0;
         }
-        return new Vector3(newX, lastPosition.y, lastPosition.z);
+        float newX2 = newX + trainPrefabLocalScale.x;
+        if (newX2 > trainPrefabLocalScale.x * 1)
+        {
+            newX2 = -trainPrefabLocalScale.x;
+        }
+        return new Vector3[] { new Vector3(newX, lastPosition.y, lastPosition.z), new Vector3(newX2, lastPosition.y, lastPosition.z), };
     }
 }

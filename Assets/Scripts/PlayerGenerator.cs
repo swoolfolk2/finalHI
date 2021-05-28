@@ -8,7 +8,7 @@ public class PlayerGenerator : MonoBehaviour
     {
         GameObject newPlayer = Instantiate(playerPrefab);
         newPlayer.transform.SetParent(transform);
-        newPlayer.transform.Translate(new Vector3(0, -4.5f, 4));
+        newPlayer.transform.localPosition = new Vector3(0, 1.9f, 4);
         controllerManager.SetPlayerMovement(newPlayer.GetComponent<PlayerMovement>());
         PlayerMovement newPLayerPlayerMovement = newPlayer.GetComponent<PlayerMovement>();
         newPLayerPlayerMovement.SetTrainGenerator(trainGenerator);

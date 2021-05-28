@@ -66,8 +66,22 @@ public class PlayerMovement : MonoBehaviour
     public void Move(Vector3 direction)
     {
         directionToMove = direction;
-        characterController.Move(direction * 3f);
-
+        if (direction.x == 1 || direction.x == -1)
+        {
+            Vector3 move = direction * trainGenerator.GetTrainPrefabLocalScale().x;
+            if (transform.position.x > -trainGenerator.GetTrainPrefabLocalScale().x && direction.x == -1)
+            {
+                characterController.Move(move);
+            }
+            else if (transform.position.x < trainGenerator.GetTrainPrefabLocalScale().x && direction.x == 1)
+            {
+                characterController.Move(move);
+            }
+        }
+        else
+        {
+            characterController.Move(direction * 3f);
+        }
     }
     private void Jump()
     {

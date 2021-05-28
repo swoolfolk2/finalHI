@@ -9,7 +9,8 @@ public class ObstacleManager : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            gameManager.EndGame();
+            gameManager.DecreaseLife();
+            Destroy(gameObject);
         }
     }
 }
