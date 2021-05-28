@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class ObstacleManager : MonoBehaviour
 {
+    public GameManager gameManager;
     private void OnCollisionEnter(Collision other)
     {
         if (other.gameObject.tag == "Player")
         {
-            Destroy(gameObject);
+            gameManager.EndGame();
         }
     }
 }

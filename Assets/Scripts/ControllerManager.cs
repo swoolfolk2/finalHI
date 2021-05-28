@@ -2,48 +2,58 @@ using UnityEngine;
 
 public class ControllerManager : MonoBehaviour
 {
-    public GameManager gameManager;
+    public GameManager gameManager = null;
     public KeyCode left = KeyCode.A;
     public KeyCode right = KeyCode.D;
-    private PlayerMovement playerMovement;
+    public PlayerMovement playerMovement;
     public void SetPlayerMovement(PlayerMovement playerMovement)
     {
         this.playerMovement = playerMovement;
     }
     private void Update()
     {
-        if (!gameManager.IsEndGameContainerActive())
+        if(!gameManager)
         {
             KeyboardInput();
-            JoystickInput();
-        }
-        else
-        {
-            if (Input.GetKeyDown(KeyCode.Joystick1Button0))
+        }else{
+            if (!gameManager.IsEndGameContainerActive())
             {
-                gameManager.StartNewGame();
+                
+                KeyboardInput();
+                JoystickInput();
             }
-            else if (Input.GetKeyDown(KeyCode.Space))
+            else
             {
-                gameManager.StartNewGame();
-            }
+                if (Input.GetKeyDown(KeyCode.Joystick1Button0))
+                {
+                    gameManager.StartNewGame();
+                }
+                else if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    gameManager.StartNewGame();
+                }
 
+            }
         }
+        
     }
     private void KeyboardInput()
     {
+        Vector3 direction = Vector3.zero;
         if (Input.GetKeyDown(left))
         {
-            playerMovement.MoveLeft();
+            direction += Vector3.left;
         }
         else if (Input.GetKeyDown(right))
         {
-            playerMovement.MoveRight();
+            direction += Vector3.right;
         }
         else if (Input.GetKeyDown(KeyCode.Space))
         {
             playerMovement.ActivateIsJumping();
+            
         }
+        playerMovement.Move(direction);
     }
     private void JoystickInput()
     {
