@@ -1944,7 +1944,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   recordMessage: {fileID: 1114731528}
   continueButton: {fileID: 1078539020}
-  containerTransform: {fileID: 1176983495}
 --- !u!114 &1762653242
 MonoBehaviour:
   m_ObjectHideFlags: 0
