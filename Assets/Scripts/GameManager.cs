@@ -9,16 +9,16 @@ using TMPro;
 */
 public class GameManager : MonoBehaviour
 {
-    public TrainGenerator trainGenerator;
+    public TrainGenerator trainGenerator; // Generate Trains Script
     public GameObject endGameContainer; // Displayed Game Over Screen
-    public Generator generator;
+    public Generator generator; // Main Generator
     public Text scoreText; // Text to display current player Score
     public Text endGameScoreText; // Text to display player Score on Game Over Screen
     public GameObject gameContainer; // UI for when Player is playing
     public List<GameObject> lifesObjects; // UI for Health of the Player 
     public GameObject pauseContainer; // UI for Pause 
-    public TextMeshProUGUI cardName;
-    public TextMeshProUGUI cardFrom;
+    public TextMeshProUGUI cardName; // Name on Card
+    public TextMeshProUGUI cardFrom; // Name of the origin place
     private int _score = 0; // int value of the Player's score
     private bool _isPlaying = false; // boolean for knowing if Player is currently playing
     private int _lifeCounter = 3; // int value of Player's Health

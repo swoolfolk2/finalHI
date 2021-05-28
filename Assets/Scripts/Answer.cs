@@ -13,8 +13,8 @@ public class Answer : MonoBehaviour
     private bool giveOrder; // if the command can be detected
     private bool done; // if is finished
     private DictationRecognizer dictationRecognizer; // object to detect voice input
-    public GameObject continueButton;
-    private int startingCounter = 0;
+    public GameObject continueButton; // button to continue to next step
+    private int startingCounter = 0; // number of fields in global control
     void Start()
     {
         startingCounter = GlobalControl.fields.Count;
