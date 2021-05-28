@@ -30,8 +30,8 @@ public class GameManager : MonoBehaviour
     {
         endGameContainer.SetActive(true);
         gameContainer.SetActive(false);
+        _isPlaying = false;
     }
-    
     /**
         Restarts the Game
     */
@@ -45,6 +45,24 @@ public class GameManager : MonoBehaviour
         scoreText.enabled = true;
         _lifeCounter = 3;
         lifesObjects.ForEach(lifeObject => lifeObject.SetActive(true));
+    }
+    /**
+        Unpause the Game
+    */
+    public void ContinueGame()
+    {
+        gameContainer.SetActive(true);
+        pauseContainer.SetActive(false);
+        _isPlaying = true;
+    }
+    /**
+        Puase the Game
+    */
+    public void PauseGame()
+    {
+        gameContainer.SetActive(false);
+        pauseContainer.SetActive(true);
+        _isPlaying = false;
     }
     /**
         Detects if the user is still playing or if it's Game Over
@@ -80,15 +98,9 @@ public class GameManager : MonoBehaviour
     */
     public bool IsPauseContainerActive()
     {
-        if(pauseContainer.activeSelf){
-            _isPlaying = false;
-        }
-        else{
-            _isPlaying = true;
-        }
         return pauseContainer.activeSelf;
     }
-    
+
     private void Start()
     {
         if (GlobalControl.fields.Count == 2)
