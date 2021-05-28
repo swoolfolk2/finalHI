@@ -1587,11 +1587,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acec1e96d4484304ab7af4ca76f9abde, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 100
-  jumpHeight: 5
-  jumpSteps: 30
   fallSpeed: 5.64
   trainGenerator: {fileID: 0}
+  gameManager: {fileID: 0}
   animator: {fileID: 0}
   height: 0
 --- !u!143 &-1031204419009115877
@@ -1943,7 +1941,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0.16037738, g: 0.078437194, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -1957,7 +1955,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 1000
+  far clip plane: 400
   field of view: 60
   orthographic: 0
   orthographic size: 5

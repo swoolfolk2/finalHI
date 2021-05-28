@@ -1132,6 +1132,7 @@ MonoBehaviour:
   - {fileID: 513296771}
   - {fileID: 316145749}
   - {fileID: 1035249391}
+  pauseContainer: {fileID: 497706358}
 --- !u!4 &731714677
 Transform:
   m_ObjectHideFlags: 0
@@ -1918,6 +1919,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerPrefab: {fileID: 1859816385569837890, guid: c33d715e104bc4a438d1c5a7ee137fb6, type: 3}
   controllerManager: {fileID: 726596197}
+  gameManager: {fileID: 731714676}
 --- !u!1 &1269706805
 GameObject:
   m_ObjectHideFlags: 0

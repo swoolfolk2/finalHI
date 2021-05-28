@@ -33,7 +33,7 @@ public class Answer : MonoBehaviour
     }
     private void Update()
     {
-        _giveOrder = Input.GetKey(KeyCode.A);
+        _giveOrder = Input.GetKey(KeyCode.Joystick1Button1);
         if (!Input.GetKey(KeyCode.B) || !_done) return;
         newObj.GetComponent<Button>().onClick.Invoke();
         var curr = GlobalControl.Instance.counter;
