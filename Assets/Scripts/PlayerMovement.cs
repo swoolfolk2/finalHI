@@ -4,22 +4,16 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float speed = 100f;
-    public float jumpHeight = 5;
-    public float jumpSteps = 60;
     public float fallSpeed = 0;
     public TrainGenerator trainGenerator;
     private Vector3 directionToMove = Vector3.zero;
     private int position = 1;
     private bool isJumping;
+    private bool canJump = true;
     private CharacterController characterController;
-    private int currentJumpStep;
-    private float currentHeight;
     private float movementSize;
     public Animator animator;
     
-    private Vector3 moveDirection = Vector3.zero;
-
     public float height;
     
     public void SetTrainGenerator(TrainGenerator trainGenerator)
@@ -44,13 +38,16 @@ public class PlayerMovement : MonoBehaviour
     }
     public void ActivateIsJumping()
     {
-        height = transform.position.y + 1;
-        isJumping = true;
-        animator.SetBool("jump",true);
+        if(canJump){
+            height = transform.position.y + 1;
+            isJumping = true;
+            animator.SetBool("jump",true);
+            canJump = false;
+        }
+        
     }
     private void Start()
     {
-        currentHeight = transform.position.y;
         characterController = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
     }
@@ -77,6 +74,7 @@ public class PlayerMovement : MonoBehaviour
         else{
             isJumping = false;
             animator.SetBool("jump",false);
+            
         }
         
         
@@ -95,6 +93,9 @@ public class PlayerMovement : MonoBehaviour
         if (!characterController.isGrounded && !isJumping)
         {
             characterController.Move(Vector3.down * fallSpeed * Time.deltaTime);
+        }
+        if(characterController.velocity == Vector3.zero){
+            canJump = true;
         }
        
     }

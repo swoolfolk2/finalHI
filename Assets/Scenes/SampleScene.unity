@@ -403,6 +403,7 @@ Transform:
   - {fileID: 1848930620}
   - {fileID: 1200616682}
   - {fileID: 1125191817}
+  - {fileID: 712289374}
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -499,6 +500,50 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1 &712289373
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 712289374}
+  - component: {fileID: 712289375}
+  m_Layer: 0
+  m_Name: Tree Generator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &712289374
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 712289373}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 1.5872059, y: 3.9328518, z: -9.850339}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 126281722}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &712289375
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 712289373}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5cf3425ad65c1a4a945b1d36c103929, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  treePrefab: {fileID: 919132149155446097, guid: ccbf705a4045cc244a7fa848ff9bffde, type: 3}
 --- !u!1 &726596195
 GameObject:
   m_ObjectHideFlags: 0
@@ -545,6 +590,7 @@ MonoBehaviour:
   gameManager: {fileID: 731714676}
   left: 97
   right: 100
+  playerMovement: {fileID: 0}
 --- !u!1 &731714675
 GameObject:
   m_ObjectHideFlags: 0
@@ -770,7 +816,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59ab478b9034f17428276ed9e000aebf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  obstaclePrefab: {fileID: 758973071733489392, guid: 6c4481a53c8d09c4eb3ac86f3b40dac7, type: 3}
+  obstaclePrefab: {fileID: 919132149155446097, guid: cee422c44b90d44438ff401ffd32ffb6, type: 3}
   height: 2.4
 --- !u!1 &1200616681
 GameObject:
