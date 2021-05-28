@@ -1,22 +1,8 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 
-public class GlobalControl : MonoBehaviour 
+public static class GlobalControl
 {
-    public static GlobalControl Instance;
-    public string[] fields = new string[3];
-    public int counter= 0;
-
-    void Awake ()
-    {
-        
-        if (Instance == null)
-        {
-            DontDestroyOnLoad(gameObject);
-            Instance = this;
-        }
-        else if (Instance != this)
-        {
-            Destroy (gameObject);
-        }
-    }
+    public static List<string> fields = new List<string>();
+    public static int counter = 0;
 }

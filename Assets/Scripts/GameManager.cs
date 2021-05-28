@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 public class GameManager : MonoBehaviour
 {
     public TrainGenerator trainGenerator;
@@ -12,6 +13,8 @@ public class GameManager : MonoBehaviour
     public GameObject gameContainer;
     public List<GameObject> lifesObjects;
     public GameObject pauseContainer;
+    public TextMeshProUGUI cardName;
+    public TextMeshProUGUI cardFrom;
     private int score = 0;
     private bool isPlaying = false;
     private int lifeCounter = 3;
@@ -68,6 +71,11 @@ public class GameManager : MonoBehaviour
     }
     private void Start()
     {
+        if (GlobalControl.fields.Count == 2)
+        {
+            cardName.text = GlobalControl.fields[0];
+            cardFrom.text = "From: " + GlobalControl.fields[1];
+        }
         StartNewGame();
         pauseContainer.SetActive(false);
     }
