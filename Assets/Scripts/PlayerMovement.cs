@@ -2,67 +2,51 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/**
+    Class to manage the movement of the Player
+*/
 public class PlayerMovement : MonoBehaviour
 {
-    public float fallSpeed = 0;
-    public TrainGenerator trainGenerator;
-    public GameManager gameManager;
-    private Vector3 directionToMove = Vector3.zero;
-    private int position = 1;
-    private bool isJumping;
-    private bool canJump = true;
-    private CharacterController characterController;
-    private float movementSize;
-    public Animator animator;
-    public float height;
-    private Rigidbody playerRigidbody;
-
-    public void SetTrainGenerator(TrainGenerator trainGenerator)
-    {
-        this.trainGenerator = trainGenerator;
-    }
-    public void MoveLeft()
-    {
-        if (position > 0)
-        {
-            position -= 1;
-            directionToMove = Vector3.left;
-        }
-    }
-    public void MoveRight()
-    {
-        if (position < 2)
-        {
-            position += 1;
-            directionToMove = Vector3.right;
-        }
-    }
+    public float fallSpeed = 8; // float value of the falling speed. Simulating Gravity
+    public TrainGenerator trainGenerator; // TrainGenerator to get train values
+    public GameManager gameManager; // Manages Game Status
+    public Animator animator; // Animator to manage player's animations
+    public float height; // float value for the maximun height that user can jump
+    private Vector3 _directionToMove = Vector3.zero; // Direction in which the user will move
+    private bool _isJumping; // boolen if the Player is jumping
+    private bool _canJump = true; // boolean if the user can jump (is grounded)
+    private CharacterController _characterController; // CharacterController to move the user
+    private Rigidbody _playerRigidbody; // to pause the Player's movement
+    
+    /**
+        When pressed the jumping action button the user will jump if it can
+    */
     public void ActivateIsJumping()
     {
-        if (canJump)
+        if (_canJump)
         {
             height = transform.position.y + 1;
-            isJumping = true;
+            _isJumping = true;
             animator.SetBool("jump", true);
-            canJump = false;
+            _canJump = false;
         }
 
     }
     private void Start()
     {
-        characterController = GetComponent<CharacterController>();
+        _characterController = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
-        playerRigidbody = GetComponent<Rigidbody>();
+        _playerRigidbody = GetComponent<Rigidbody>();
     }
     private void Update()
     {
         if (!gameManager.IsPauseContainerActive())
         {
-            if (playerRigidbody.isKinematic)
+            if (_playerRigidbody.isKinematic)
             {
-                playerRigidbody.isKinematic = false;
+                _playerRigidbody.isKinematic = false;
             }
-            if (isJumping)
+            if (_isJumping)
             {
                 Jump();
             }
@@ -73,57 +57,63 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            playerRigidbody.isKinematic = true;
+            _playerRigidbody.isKinematic = true;
         }
     }
+
+    /**
+        Move the Player in the give [direction]
+        @param direction Vector3 to determine the direction in which the player will move
+    */
     public void Move(Vector3 direction)
     {
-        directionToMove = direction;
+        _directionToMove = direction;
         if (direction.x == 1 || direction.x == -1)
         {
             Vector3 move = direction * trainGenerator.GetTrainPrefabLocalScale().x;
             if (transform.position.x > -trainGenerator.GetTrainPrefabLocalScale().x && direction.x == -1)
             {
-                characterController.Move(move);
+                _characterController.Move(move);
             }
             else if (transform.position.x < trainGenerator.GetTrainPrefabLocalScale().x && direction.x == 1)
             {
-                characterController.Move(move);
+                _characterController.Move(move);
             }
         }
         else
         {
-            characterController.Move(direction * 3f);
+            _characterController.Move(direction * 3f);
         }
     }
+
+    /**
+        Move the Player in a upwards direction to make a simulated jump
+    */
     private void Jump()
     {
         if (transform.position.y < height)
         {
-            characterController.Move(Vector3.up * 2 * Time.deltaTime);
+            _characterController.Move(Vector3.up * 2 * Time.deltaTime);
         }
         else
         {
-            isJumping = false;
+            _isJumping = false;
             animator.SetBool("jump", false);
 
         }
     }
-    private void SetPosition()
-    {
-
-        transform.position = new Vector3(TrainGenerator.creationPositions[position] * movementSize, transform.position.y, transform.position.z);
-        directionToMove = Vector3.zero;
-    }
+    /**
+        Move the Player in a downwards direction to make a simulated gravity fall
+    */
     private void Fall()
     {
-        if (!characterController.isGrounded && !isJumping)
+        if (!_characterController.isGrounded && !_isJumping)
         {
-            characterController.Move(Vector3.down * fallSpeed * Time.deltaTime);
+            _characterController.Move(Vector3.down * fallSpeed * Time.deltaTime);
         }
-        if (characterController.velocity == Vector3.zero)
+        if (_characterController.velocity == Vector3.zero)
         {
-            canJump = true;
+            _canJump = true;
         }
 
     }

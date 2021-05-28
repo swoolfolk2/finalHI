@@ -1,16 +1,23 @@
 using UnityEngine;
 using System;
 
+/**
+    Class to manage all Generators of Objects, such as Trains, Obstacles and Player
+*/
 public class Generator : MonoBehaviour
 {
-    public TrainGenerator trainGenerator;
-    public GameObject mainCamera;
-    public PlayerGenerator playerGenerator;
-    public GameManager gameManager;
-    public ObstacleGenerator obstacleGenerator;
-    private float timer = 0;
-    private int trainCounter = 0;
-    private bool generateObstacle;
+    public TrainGenerator trainGenerator; // Generates random Trains
+    public GameObject mainCamera; // Main Camera Object 
+    public PlayerGenerator playerGenerator; // Generates the player to the starting position
+    public GameManager gameManager; // Manages Game status
+    public ObstacleGenerator obstacleGenerator; // Generates random Objects as obstacles
+    private float _timer = 0; // timer to detect when to create new trains
+    private int _trainCounter = 0; // counter of number of trains generated 
+    private bool _generateObstacle; // If it must generate obstacle or not
+
+    /**
+        Generates the first generation of the level
+    */
     public void CreateFirstGeneration()
     {
         DestroyPrefabsInstances();
@@ -25,21 +32,29 @@ public class Generator : MonoBehaviour
             CreateNextGeneration();
         }
     }
+
+    /**
+        Generates the next generation of the level
+    */
     private void CreateNextGeneration()
     {
-        timer += Time.deltaTime;
-        if (timer >= trainGenerator.GetLastSize() / 10 / TrainMovement.speed)
+        _timer += Time.deltaTime;
+        if (_timer >= trainGenerator.GetLastSize() / 10 / TrainMovement.speed)
         {
-            timer = 0;
+            _timer = 0;
             trainGenerator.CreateNextGeneration();
-            generateObstacle = Convert.ToBoolean(UnityEngine.Random.Range(0, 2));
-            if (trainCounter % 3 == 0 && generateObstacle)
+            _generateObstacle = Convert.ToBoolean(UnityEngine.Random.Range(0, 2));
+            if (_trainCounter % 3 == 0 && _generateObstacle)
             {
                 obstacleGenerator.CreateNextGeneration(trainGenerator.GetLastTrainCreated().transform);
             }
-            trainCounter++;
+            _trainCounter++;
         }
     }
+
+    /**
+        Destroys all objects
+    */
     private void DestroyPrefabsInstances()
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
