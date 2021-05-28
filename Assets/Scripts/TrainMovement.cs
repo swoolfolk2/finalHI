@@ -12,7 +12,7 @@ public class TrainMovement : MonoBehaviour
     }
     private void Update()
     {
-        if (!gameManager.IsEndGameContainerActive())
+        if (!gameManager.IsEndGameContainerActive() && !gameManager.IsPauseContainerActive())
         {
             Vector3 direction = Vector3.back;
             transform.position += direction * speed * Time.deltaTime;

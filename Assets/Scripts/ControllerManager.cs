@@ -12,17 +12,19 @@ public class ControllerManager : MonoBehaviour
     }
     private void Update()
     {
-        if(!gameManager)
+        if (!gameManager)
         {
             KeyboardInput();
-        }else{
-            if (!gameManager.IsEndGameContainerActive())
+        }
+        else
+        {
+            if (!gameManager.IsEndGameContainerActive() && !gameManager.IsPauseContainerActive())
             {
-                
+
                 KeyboardInput();
                 JoystickInput();
             }
-            else
+            if (gameManager.IsEndGameContainerActive())
             {
                 if (Input.GetKeyDown(KeyCode.Joystick1Button0))
                 {
@@ -34,8 +36,15 @@ public class ControllerManager : MonoBehaviour
                 }
 
             }
+            if (gameManager.IsPauseContainerActive())
+            {
+                if (Input.GetKeyDown(KeyCode.Joystick1Button1))
+                {
+                    gameManager.ContinueGame();
+                }
+            }
         }
-        
+
     }
     private void KeyboardInput()
     {
@@ -51,23 +60,29 @@ public class ControllerManager : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.Space))
         {
             playerMovement.ActivateIsJumping();
-            
+
         }
         playerMovement.Move(direction);
     }
     private void JoystickInput()
     {
+        Vector3 direction = Vector3.zero;
         if (Input.GetKeyDown(KeyCode.Joystick1Button4))
         {
-            playerMovement.MoveLeft();
+            direction += Vector3.left;
         }
         if (Input.GetKeyDown(KeyCode.Joystick1Button5))
         {
-            playerMovement.MoveRight();
+            direction += Vector3.right;
         }
         if (Input.GetKeyDown(KeyCode.Joystick1Button0))
         {
             playerMovement.ActivateIsJumping();
         }
+        if (Input.GetKeyDown(KeyCode.Joystick1Button7))
+        {
+            gameManager.PauseGame();
+        }
+        playerMovement.Move(direction);
     }
 }

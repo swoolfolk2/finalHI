@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     public Text endGameScoreText;
     public GameObject gameContainer;
     public List<GameObject> lifesObjects;
+    public GameObject pauseContainer;
     private int score = 0;
     private bool isPlaying = false;
     private int lifeCounter = 3;
@@ -33,7 +34,6 @@ public class GameManager : MonoBehaviour
     }
     public bool IsEndGameContainerActive()
     {
-
         if (endGameContainer.activeSelf)
         {
             isPlaying = false;
@@ -52,9 +52,24 @@ public class GameManager : MonoBehaviour
             EndGame();
         }
     }
+    public bool IsPauseContainerActive()
+    {
+        return pauseContainer.activeSelf;
+    }
+    public void ContinueGame()
+    {
+        gameContainer.SetActive(true);
+        pauseContainer.SetActive(false);
+    }
+    public void PauseGame()
+    {
+        gameContainer.SetActive(false);
+        pauseContainer.SetActive(true);
+    }
     private void Start()
     {
         StartNewGame();
+        pauseContainer.SetActive(false);
     }
 
     private void Update()

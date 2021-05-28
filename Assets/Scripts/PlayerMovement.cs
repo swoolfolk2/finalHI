@@ -6,6 +6,7 @@ public class PlayerMovement : MonoBehaviour
 {
     public float fallSpeed = 0;
     public TrainGenerator trainGenerator;
+    public GameManager gameManager;
     private Vector3 directionToMove = Vector3.zero;
     private int position = 1;
     private bool isJumping;
@@ -13,8 +14,8 @@ public class PlayerMovement : MonoBehaviour
     private CharacterController characterController;
     private float movementSize;
     public Animator animator;
-
     public float height;
+    private Rigidbody playerRigidbody;
 
     public void SetTrainGenerator(TrainGenerator trainGenerator)
     {
@@ -51,16 +52,28 @@ public class PlayerMovement : MonoBehaviour
     {
         characterController = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
+        playerRigidbody = GetComponent<Rigidbody>();
     }
     private void Update()
     {
-        if (isJumping)
+        if (!gameManager.IsPauseContainerActive())
         {
-            Jump();
+            if (playerRigidbody.isKinematic)
+            {
+                playerRigidbody.isKinematic = false;
+            }
+            if (isJumping)
+            {
+                Jump();
+            }
+            else
+            {
+                Fall();
+            }
         }
         else
         {
-            Fall();
+            playerRigidbody.isKinematic = true;
         }
     }
     public void Move(Vector3 direction)

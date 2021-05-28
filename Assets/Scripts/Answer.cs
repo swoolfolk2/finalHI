@@ -36,14 +36,14 @@ public class Answer : MonoBehaviour
         _giveOrder = Input.GetKey(KeyCode.A);
         if (!Input.GetKey(KeyCode.B) || !_done) return;
         newObj.GetComponent<Button>().onClick.Invoke();
-        dictationRecognizer.Stop();
         var curr = GlobalControl.Instance.counter;
         GlobalControl.Instance.fields[curr] = _Result.text;
         GlobalControl.Instance.counter += 1;
     }
     public void showNext()
     {
-        newObj = Instantiate(continueButton, containerTransform);
-        Destroy(recordMessage);
+        continueButton.SetActive(true);
+        recordMessage.SetActive(false);
+        dictationRecognizer.Stop();
     }
 }
